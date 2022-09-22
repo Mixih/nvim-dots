@@ -1,0 +1,54 @@
+snippet hguard "#ifndef ... #define ... #endif" b
+#ifndef $1_H_
+#define $1_H_
+$0
+#endif /* $1_H_ */
+endsnippet
+
+snippet main "int main(int argc, char *argv[])" b
+int main(int argc, char *argv[]) {
+	$0
+	return 0;
+}
+endsnippet
+
+snippet inc "#include <...>" b
+#include <$1>$0
+endsnippet
+
+snippet linc "#include ..." b
+#include "$1"$0
+endsnippet
+
+snippet def "#define ..."
+#define $1
+endsnippet
+
+snippet fun "function" b
+${1:void} ${2:function_name}($3)
+{
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fund "function declaration" b
+${1:void} ${2:function_name}($3);
+endsnippet
+
+snippet for "for loop (for)"
+for (${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fori "for int loop (fori)"
+for (${4:int} ${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet eli "else if .. (eli)"
+else if (${1:/* condition */}) {
+	${VISUAL}$0
+}
+endsnippet

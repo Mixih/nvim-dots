@@ -1,0 +1,178 @@
+global !p
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+endglobal
+
+snippet begn "\begin{}...\end{} block" bA
+\begin{$1}
+	$2
+\end{$1}$0
+endsnippet
+
+snippet mk "Inline Math" wA
+\$${1}\$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Display Math" wA
+\[
+$1
+\]$0
+endsnippet
+
+snippet ttt "Monospaced text" wA
+\texttt{$1}$0
+endsnippet
+
+snippet tbold "Bold text" wA
+\textbf{$1}$0
+endsnippet
+
+snippet tscp "Small-cap text" wA
+\textsc{$1}$0
+endsnippet
+
+snippet algo "Algorithm block" b
+\begin{algorithm}
+\caption{${1:caption}}
+\begin{algorithmic}[${2:config, def=1}]
+$3
+\end{algorithmic}
+\end{algorithm}$0
+endsnippet
+
+context "math()"
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+
+snippet lim "Limit, lim_{n \to ..." i
+\lim_{$1 \to $2}$0
+endsnippet
+
+snippet sum "Summation, \sum_{..." i
+\sum_{${1:lower}}^{${2:upper}}$0
+endsnippet
+
+snippet intab "\int_{a}^{b}..." i
+\int_{${1:a}}^{${2:b}}$0
+endsnippet
+
+# --------------------------------
+# Math
+# --------------------------------
+
+context "math()"
+snippet ... "\cdots" wA
+\cdots$0
+endsnippet
+
+context "math()"
+snippet ceil "ceiling func" wA
+\left\lceil $1 \right\rceil$0
+endsnippet
+
+context "math()"
+snippet floor "floor func" wA
+\left\lfloor $1 \right\rfloor$0
+endsnippet
+
+context "math()"
+snippet log "log func" wA
+\log$0
+endsnippet
+
+context "math()"
+snippet ceil "sqrt func" wA
+\sqrt{$1}$0
+endsnippet
+
+context "math()"
+snippet paren "Big Parenthesis" wA
+\left($1\right)$0
+endsnippet
+
+context "math()"
+snippet brkt "Big bracket" wA
+\left[$1\right]$0
+endsnippet
+
+context "math()"
+snippet peq "Plus equals" wA
+\mathrel{+}=$0
+endsnippet
+
+context "math()"
+snippet txt "Math text" wA
+\text{$1}$0
+endsnippet
+
+# arrows
+# --------------------------------
+context "math()"
+snippet <- "\gets" iA
+\gets$0
+endsnippet
+
+context "math()"
+snippet -> "\to" iA
+\to$0
+endsnippet
+
+context "math()"
+snippet => "Right implies" iA
+\Rightarrow$0
+endsnippet
+
+context "math()"
+snippet <= "Left implies" i
+\Leftarrow$0
+endsnippet
+
+context "math()"
+snippet <=> "iff" iA
+\Leftrightarrow$0
+endsnippet
+
+# Algorithm shortcuts
+# --------------------------------
+
+snippet For "for loop" w
+\For{$1}
+	$2
+\EndFor$0
+endsnippet
+
+snippet While "while loop" w
+\While{$1}
+	$2
+\EndWhile$0
+endsnippet
+
+snippet If "if statement" w
+\If{$1}
+	$2
+\EndIf$0
+endsnippet
+
+snippet Proc "procedure definition" w
+\Procedure{$1}{$2}
+	$3
+\EndProcedure$0
+endsnippet
+
+snippet fcall "function call" w
+\textsc{$1} ($$2$)$0
+endsnippet
+
+snippet st "statement" w
+\State{$1}$0
+endsnippet
+
+snippet ret "return" w
+\textbf{return}$0
+endsnippet

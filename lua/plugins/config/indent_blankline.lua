@@ -1,0 +1,7 @@
+local indent_blankline = require('indent_blankline')
+
+indent_blankline.setup({
+    filetype_exclude  = {
+        'make',
+    },
+})
