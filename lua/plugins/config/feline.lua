@@ -78,49 +78,38 @@ statusline_components.active[1] = {
     },
     {
         provider = 'git_branch',
-        hl = {
-            fg = 'white',
-            bg = 'black',
-            style = 'bold',
-        },
         right_sep = {
             str = ' ',
             hl = {
                 fg = 'NONE',
-                bg = 'black',
             },
         },
+        icon = '  ',
     },
     {
         provider = 'git_diff_added',
         hl = {
             fg = 'green',
-            bg = 'black',
         },
+        icon = '  ',
     },
     {
         provider = 'git_diff_changed',
         hl = {
             fg = 'orange',
-            bg = 'black',
         },
+        icon = '  ',
     },
     {
         provider = 'git_diff_removed',
         hl = {
             fg = 'red',
-            bg = 'black',
         },
-        right_sep = {
-            str = ' ',
-            hl = {
-                fg = 'NONE',
-                bg = 'bg',
-            },
-        },
+        icon = '  ',
     },
     {
         hl = {
+            fg = 'NONE',
             bg = 'bg',
         },
     },

@@ -1,6 +1,7 @@
 require('plugins.config.colorscheme')
 require('plugins.config.common')
 require('plugins.config.feline')
+require('plugins.config.gitsigns')
 require('plugins.config.indent_blankline')
 require('plugins.config.lsp')
 require('plugins.config.nvim_cmp')
