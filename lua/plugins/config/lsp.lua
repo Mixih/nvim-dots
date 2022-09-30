@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
 local cmp_nvim_lsp = require ('cmp_nvim_lsp')
+
 local util = require('core.util')
 
 -- aliases
@@ -37,16 +38,13 @@ local function on_attach_handler(client, bufnr)
     end, keyopts)
 
     -- show diagnostic automatically as pop-up
-    util.define_autocmds("LspAttachBuf", {
-        {
-            events = { 'CursorHold' },
-            pattern = '*',
-            callback = function(event)
-                if (not hover_open) then
-                    vim.diagnostic.open_float({ focusable = false })
-                end
-            end,
-        },
+    util.define_buffer_autocmd({
+        events = { 'CursorHold' },
+        callback = function(event)
+            if (not hover_open) then
+                vim.diagnostic.open_float({ focusable = false })
+            end
+        end,
     })
 end
 

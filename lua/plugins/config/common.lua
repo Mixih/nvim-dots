@@ -7,7 +7,7 @@ nvim_dev_icons.setup({
 
 -- better escape config
 better_escape.setup({
-    mapping = { 'jk' },
+    mapping = { 'jk', 'kj' },
     timeout = 100,
 })
 

@@ -165,6 +165,7 @@ statusline_components.active[2] = {
                 bg = 'grey',
             },
         },
+        icon = ' '
     },
     {
         provider = {
@@ -172,7 +173,7 @@ statusline_components.active[2] = {
             opts = {
                 padding = {
                     line = 3,
-                    col = 3,
+                    col = 2,
                 },
                 format = ' {line}:{col}',
             }
@@ -210,6 +211,36 @@ statusline_components.active[2] = {
     {
         provider = 'diagnostic_info',
         hl = { fg = 'skyblue' },
+    },
+}
+
+statusline_components.inactive[1] = {
+    {
+        provider = 'file_info',
+        hl = {
+            fg = 'white',
+            bg = 'bg',
+            style = 'bold',
+        },
+        left_sep = {
+            str = ' ',
+            hl = {
+                bg = 'bg',
+            },
+        },
+        right_sep = {
+            str = ' ',
+            hl = {
+                bg = 'bg',
+            },
+        },
+        icon = '',
+    },
+    {
+        hl = {
+            fg = 'NONE',
+            bg = 'bg',
+        },
     },
 }
 

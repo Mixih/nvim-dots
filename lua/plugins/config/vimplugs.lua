@@ -2,13 +2,13 @@
 -- plugin is loaded
 local util = require('core.util')
 
+-- aliases
+local opt_local = vim.opt_local
+
 -- ultisnips config
 vim.g.UltiSnipsExpandTrigger        = '<Tab>'
 vim.g.UltiSnipsJumpForwardTrigger   = '<Tab>'
 vim.g.UltiSnipsJumpBackwardsTrigger = '<S-Tab>'
-
--- override questionable polyglot features
---vim.g.polyglot_disabled = { 'autoindent' }
 
 -- vimtex config
 vim.g.vimtex_fold_enabled = true
@@ -18,17 +18,11 @@ util.define_autocmds('VimtexFolding', {
         events = 'FileType',
         pattern = 'tex',
         callback = function (event)
-            util.define_free_autocmd({
+            util.define_buffer_autocmd({
                 events = 'BufWinEnter',
-                pattern = '*',
                 callback = function()
-                    local setopts = util.get_setopt_callback({
-                        localOpts = {
-                            foldexpr = 'vimtex#fold#level(v:lnum)',
-                            foldtext = 'vimtex#fold#text()'
-                        }
-                    })
-                    setopts()
+                    opt_local.foldexpr = 'vimtex#fold#level(v:lnum)'
+                    opt_local.foldtext = 'vimtex#fold#text()'
                     vim.api.nvim_command('normal zR')
                 end
             })

@@ -70,7 +70,7 @@ util.define_autocmds('CustomIndentationRules', {
 -- rule and callback to remove trailing spaces from supported files
 -- automatically
 local function strip_trailing_spaces_callback(event)
-    util.define_free_autocmd({
+    util.define_buffer_autocmd({
         events = { 'BufWritePre' },
         pattern = '<buffer>',
         command = '%s/\\s\\+$//e',

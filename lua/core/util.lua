@@ -49,9 +49,34 @@ function M.define_autocmds(groupName, defs)
     end
 end
 
-function M.define_free_autocmd(def)
+function M.define_buffer_autocmd(def)
+    local default_opts = {
+        pattern = '<buffer>',
+    }
     local events = M.table_pop_key(def, 'events')
-    api.nvim_create_autocmd(events, def)
+    -- override current buffer local with matching event by default
+    local override = M.table_pop_key(def, 'override')
+    if (override == nil) then
+        override = true
+    end
+
+    -- handle clearing old autocommnds for event if override is specified
+    if (override) then
+        local existing = api.nvim_get_autocmds({
+            event = events,
+            pattern = '<buffer>'
+        })
+        for _, autocmd in ipairs(existing) do
+            -- only remove if we have an id handle
+            if (autocmd.id ~= nil) then
+                api.nvim_del_autocmd(autocmd.id)
+            end
+        end
+    end
+
+    -- set buffer-local autocmd
+    local opts = vim.tbl_extend('keep', default_opts, def)
+    api.nvim_create_autocmd(events, opts)
 end
 
 -- get a callback for autocommand def that modifies the specified  options

@@ -1,4 +1,6 @@
--- load core functionality
+-- load early hooks
+require('plugins.hooks.preload')
+-- load config
 require('core')
--- load external plugins and configs
 require('plugins')
+require('user')
