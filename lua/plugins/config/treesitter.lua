@@ -1,5 +1,7 @@
 local treesitter = require('nvim-treesitter.configs')
 
+local opt = vim.opt
+
 treesitter.setup {
     auto_install = true,
     highlight = {
@@ -15,3 +17,5 @@ treesitter.setup {
         enable = true
     },
 }
+
+--opt.foldexpr = 'nvim_treesitter#foldexpr()'

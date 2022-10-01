@@ -1,7 +1,6 @@
 local util = require('core.util')
 local api = vim.api
 
-
 -- this function and its associated autocommand return the cursor to its last
 -- known position when re-opening a file.
 local function return_cursor(event)
@@ -88,7 +87,7 @@ util.define_autocmds('StripTrailingSpaces', {
 
 util.define_autocmds('SetFiletypeOverrides', {
     {
-        events = { 'BufRead' },
+        events = { 'BufRead', 'BufNewFile' },
         pattern = '*.S',
         callback = util.get_setopt_callback({
             localOpts = { ft = 'gas' },

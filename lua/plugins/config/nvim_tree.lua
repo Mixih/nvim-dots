@@ -4,7 +4,10 @@ local util = require('core.util')
 nvim_tree.setup({
     sort_by = 'name',
     filesystem_watchers = {
-        enable = true
+        enable = true,
+    },
+    git = {
+        ignore = false,
     },
 })
 

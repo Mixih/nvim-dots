@@ -49,6 +49,10 @@ function M.define_autocmds(groupName, defs)
     end
 end
 
+-- Defines a buffer local autocommand.
+--
+-- Follows the same definition format as the define_autocmds, except only one autocmd may
+-- be defined at once.
 function M.define_buffer_autocmd(def)
     local default_opts = {
         pattern = '<buffer>',
@@ -110,8 +114,8 @@ function M.keymap(mode, lhs, rhs, opts)
     if type(rhs) == 'function' then
         options.callback = rhs
         target = ''
-    else
     end
+
     --  handle buffer keymaps
     if options.buffer ~= nil then
         local bufno = M.table_pop_key(options, 'buffer')
@@ -138,6 +142,21 @@ function M.bufwinid(buf)
         end
     end
     return -1
+end
+
+-- Error-checked require that logs a message and returns nil on load failure.
+--
+-- @param modname module to load
+-- @return loaded value
+function M.prequire(modname)
+    local status, lib = pcall(require, modname)
+    if (status) then
+        return lib
+    else
+        vim.notify(string.format("Failed to load module '%s'.", modname),
+                   vim.log.levels.ERROR)
+        return nil
+    end
 end
 
 return M

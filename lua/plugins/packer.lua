@@ -29,6 +29,7 @@ function M.load_plugins()
             -- completion
             use 'hrsh7th/cmp-nvim-lsp'
             use 'hrsh7th/cmp-buffer'
+            use 'hrsh7th/cmp-nvim-lsp-signature-help'
             use 'hrsh7th/cmp-path'
             use 'hrsh7th/cmp-cmdline'
             use 'hrsh7th/nvim-cmp'
@@ -59,6 +60,7 @@ function M.load_plugins()
             use 'tweekmonster/startuptime.vim'
             use { 'nvim-telescope/telescope.nvim', branch = '0.1.x' }
             use 'rcarriga/nvim-notify' -- pretty notifications
+            use 'windwp/nvim-autopairs'
 
             -- LSP-based addons
             use 'neovim/nvim-lspconfig'
