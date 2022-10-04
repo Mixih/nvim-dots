@@ -49,7 +49,20 @@ cmp.setup({
             -- so that you can provide more controls on popup customization.
             -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
             before = function (entry, vim_item)
-               return vim_item
+                -- add completion source annotations
+                --vim_item.menu = ({
+                    --nvim_lsp = '',
+                    --ultisnips = '',
+                    --buffer = ''
+                    --nvim_lsp_signature_help = ''
+                --})[entry.source.name]
+                vim_item.menu = ({
+                    nvim_lsp = '[LSP]',
+                    ultisnips = '[SNIP]',
+                    buffer = '[BUF]',
+                    nvim_lsp_signature_help = '[SIG]'
+                })[entry.source.name]
+                return vim_item
             end
         })
     },

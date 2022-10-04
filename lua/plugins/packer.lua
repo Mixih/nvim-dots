@@ -56,6 +56,7 @@ function M.load_plugins()
                 run = 'make hexokinase'
             }
             use 'SirVer/ultisnips'   -- snippets
+            use 'SmiteshP/nvim-navic'
             use 'tpope/vim-surround'
             use 'tweekmonster/startuptime.vim'
             use { 'nvim-telescope/telescope.nvim', branch = '0.1.x' }
@@ -66,6 +67,7 @@ function M.load_plugins()
             use 'neovim/nvim-lspconfig'
             use 'onsails/lspkind-nvim'
             use 'simrat39/symbols-outline.nvim'
+            use 'p00f/clangd_extensions.nvim'
 
             -- language plugins
             use 'lervag/vimtex'   -- tex

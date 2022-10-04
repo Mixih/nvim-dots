@@ -1,5 +1,7 @@
 local lspconfig = require('lspconfig')
 local cmp_nvim_lsp = require ('cmp_nvim_lsp')
+local navic = require('nvim-navic')
+local clangd_extensions = require('clangd_extensions')
 
 local util = require('core.util')
 
@@ -46,6 +48,8 @@ local function on_attach_handler(client, bufnr)
             end
         end,
     })
+    -- attach navic client (must occur after the autocommand)
+    navic.attach(client ,bufnr)
 end
 
 -- configure diagnostic symbols
@@ -75,14 +79,40 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
 )
 
 -- configure each lsp
-lspconfig.clangd.setup {
-    capabilities = capabilities,
-    on_attach = on_attach_handler,
-    cmd = {
-        'clangd',
-        '--background-index',
-        '--clang-tidy',
-        '--header-insertion=iwyu'
+require("clangd_extensions").setup {
+    server = {
+        capabilities = capabilities,
+        on_attach = on_attach_handler,
+        cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--header-insertion=iwyu'
+        }
+    },
+    extensions = {
+        autoSetHints = true,
+        ast = {
+            -- These require codicons (https://github.com/microsoft/vscode-codicons)
+            role_icons = {
+                type = "",
+                declaration = "",
+                expression = "",
+                specifier = "",
+                statement = "",
+                ["template argument"] = "",
+            },
+
+            kind_icons = {
+                Compound = "",
+                Recovery = "",
+                TranslationUnit = "",
+                PackExpansion = "",
+                TemplateTypeParm = "",
+                TemplateTemplateParm = "",
+                TemplateParamObject = "",
+            },
+        },
     }
 }
 

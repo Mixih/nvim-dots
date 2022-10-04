@@ -71,7 +71,6 @@ util.define_autocmds('CustomIndentationRules', {
 local function strip_trailing_spaces_callback(event)
     util.define_buffer_autocmd({
         events = { 'BufWritePre' },
-        pattern = '<buffer>',
         command = '%s/\\s\\+$//e',
     })
 end

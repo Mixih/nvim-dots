@@ -1,4 +1,5 @@
 local treesitter = require('nvim-treesitter.configs')
+local util = require('core.util')
 
 local opt = vim.opt
 
@@ -6,6 +7,7 @@ treesitter.setup {
     auto_install = true,
     highlight = {
         enable = true,
+        disable = { 'help' },
         use_languagetree = true,
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).

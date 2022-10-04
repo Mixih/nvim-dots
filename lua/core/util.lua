@@ -25,16 +25,15 @@ end
 --     opts..
 --   }
 --
--- Examples:
+-- Example:
 --
 -- * Set automatic spellcheck
 --   define_autocmds('spellCheck', {
---     {
---         events = "BufRead", "BufNewFile" },
---         pattern = {"*.md", "*.tex"},
---         command = "setlocal spell"
+--       {
+--           events = { "BufRead", "BufNewFile" },
+--           pattern = {"*.md", "*.tex"},
+--           command = "setlocal spell"
 --       }
---     }
 --   })
 function M.define_autocmds(groupName, defs)
     local default_opts = {
@@ -155,6 +154,7 @@ function M.prequire(modname)
     else
         vim.notify(string.format("Failed to load module '%s'.", modname),
                    vim.log.levels.ERROR)
+        vim.notify(string.format("Got error: %s", lib), vim.log.levels.ERROR)
         return nil
     end
 end

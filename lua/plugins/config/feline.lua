@@ -1,5 +1,15 @@
 local feline = require('feline')
+local providers = require('plugins.config.feline_provider')
 local vi_mode = require('feline.providers.vi_mode')
+
+providers.setup({
+    code_context_enabled ={
+        'lua',
+        'c',
+        'cpp',
+        'ocaml'
+    }
+})
 
 local statusline_components = {
     active = {},
@@ -244,8 +254,25 @@ statusline_components.inactive[1] = {
     },
 }
 
+
+local winbar_components = {
+    active = {},
+    inactive = {}
+}
+
+winbar_components.active[1] = {
+    {
+        provider = function()
+            return providers.code_context()
+        end
+    }
+}
+
 feline.setup({
     theme = theme,
     components = statusline_components
 })
---feline.winbar.setup()
+
+feline.winbar.setup({
+    components = winbar_components
+})

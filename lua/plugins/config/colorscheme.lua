@@ -2,7 +2,7 @@ local onedark = require('onedark')
 
 onedark.setup  {
     -- Main options --
-    style = 'dark',
+    style = 'darker',
      -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
     transparent = false,  -- Show/hide background
     term_colors = true, -- Change terminal color as per the selected theme style
@@ -22,6 +22,11 @@ onedark.setup  {
         strings = 'none',
         variables = 'none'
     },
+    -- tune some of the colors to enhance visibility
+    colors = {
+        fg = '#abb2bf',
+        grey = '#6c7485',
+    }
 }
 
 onedark.load()
