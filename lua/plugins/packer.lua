@@ -46,7 +46,7 @@ function M.load_plugins()
                 'mg979/vim-visual-multi',
                 branch = 'master'
             }
-            use 'preservim/nerdcommenter'
+            use 'numToStr/Comment.nvim'
             use {
                 'puremourning/vimspector',
                 run = './install_gadget.py --enable-c --enable-python'

@@ -41,7 +41,7 @@ util.define_autocmds('CustomIndentationRules', {
     -- two space indent rule
     {
         events = { 'FileType' },
-        pattern = { 'html', 'htmldjango', 'json', 'yaml' },
+        pattern = { 'dune', 'html', 'htmldjango', 'json', 'ocaml', 'yaml' },
         callback = util.get_setopt_callback({
             localOpts = {
                 tabstop = 8,
@@ -79,7 +79,7 @@ util.define_autocmds('StripTrailingSpaces', {
     {
         events = { 'FileType' },
         pattern = { 'asm', 'c', 'cpp', 'gas', 'lua', 'java', 'kotlin',
-                    'python', 'tex', 'vim'},
+                    'ocmal', 'python', 'tex', 'vim'},
         callback = strip_trailing_spaces_callback,
     }
 })

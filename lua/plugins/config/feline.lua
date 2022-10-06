@@ -117,6 +117,7 @@ statusline_components.active[1] = {
         },
         icon = '  ',
     },
+    -- reset highlights
     {
         hl = {
             fg = 'NONE',
@@ -127,22 +128,35 @@ statusline_components.active[1] = {
 
 statusline_components.active[2] = {
     {
-        provider = 'file_format',
-        left_sep = ' ',
+        hl = {
+            fg = 'fg',
+            bg = 'bg',
+        },
+    },
+    {
+        provider = providers.lsp_progress,
         right_sep = {
             str = ' |',
             hl = {
-                fg = 'fg',
+                fg = 'fg'
             },
         },
     },
     {
-        provider = 'file_encoding',
-        left_sep = ' ',
+        provider = providers.lsp_name,
         right_sep = {
             str = ' |',
             hl = {
-                fg = 'fg',
+                fg = 'fg'
+            },
+        },
+    },
+    {
+        provider = providers.file_encoding_fmt,
+        right_sep = {
+            str = ' |',
+            hl = {
+                fg = 'fg'
             },
         },
     },
@@ -181,10 +195,10 @@ statusline_components.active[2] = {
         provider = {
             name = 'position',
             opts = {
-                padding = {
-                    line = 3,
-                    col = 2,
-                },
+                --padding = {
+                    --line = 2,
+                    --col = 2,
+                --},
                 format = ' {line}:{col}',
             }
         },

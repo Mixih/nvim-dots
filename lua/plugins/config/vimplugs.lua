@@ -13,6 +13,7 @@ vim.g.UltiSnipsJumpBackwardsTrigger = '<S-Tab>'
 -- vimtex config
 vim.g.vimtex_fold_enabled = true
 --vim.opt.foldexpr='vimtex#fold#level(v:lnum)'
+-- force enable folding support
 util.define_autocmds('VimtexFolding', {
     {
         events = 'FileType',
