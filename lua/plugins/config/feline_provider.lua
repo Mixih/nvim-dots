@@ -18,7 +18,7 @@ function M.code_context()
 end
 
 -- a component that renders the current lsp progress messages
-function M.lsp_progress()
+function M.lsp_progress(component)
     local lsp_progress = vim.lsp.util.get_progress_messages()[1]
     if not lsp_progress then
         return ''
@@ -29,7 +29,10 @@ function M.lsp_progress()
         local spinners = { '  ', '  ', '  ' }
         local ms = vim.loop.hrtime() / 1000000
         local frame = (math.floor(ms / 100) % #spinners) + 1
-        return string.format('%s %s %s (%s%%%%)', spinners[frame], title, msg, percentage)
+        if component.icon ~= '' then
+            component.icon = spinners[frame]
+        end
+        return string.format('%s %s (%s%%%%)', title, msg, percentage)
     end
 end
 
@@ -51,13 +54,12 @@ function M.lsp_name(component)
     if not primary then
         return ''
     end
-    if not component.icon then
-        if vim.lsp.buf.server_ready() then
-            component.icon = icons.ready
-        elseif vim.lsp.client_is_stopped(primary.id) then
+    if component.icon ~= '' then
+        if vim.lsp.client_is_stopped(primary.id) then
             component.icon = icons.stopped
         else
-            component.icon = icons.waiting
+            component.icon = icons.ready
+            -- component.icon = icons.waiting
         end
     end
     return '' .. primary.name
@@ -68,11 +70,11 @@ function M.file_encoding_fmt(component)
     local os_icons = {
         unix = '  ',
         dos = '  ',
-        mac = ' ',
+        mac = '  ',
     }
     local encoding = ((vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc)
     local format = ((vim.bo.fileformat ~= '' and vim.bo.fileformat) or vim.o.fileformat)
-    if not component.icon then
+    if component.icon ~= '' then
         component.icon = os_icons[format]
     end
     return encoding

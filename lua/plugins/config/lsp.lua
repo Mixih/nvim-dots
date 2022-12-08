@@ -3,6 +3,7 @@ local cmp_nvim_lsp = require ('cmp_nvim_lsp')
 local navic = require('nvim-navic')
 local clangd_extensions = require('clangd_extensions')
 
+local lsp_progress = require('plugins.lsp.lsp_progress')
 local util = require('core.util')
 
 -- aliases
@@ -10,7 +11,7 @@ local api = vim.api
 local lsp = vim.lsp
 
 -- set capabilities for lsps
-local capabilities = cmp_nvim_lsp.update_capabilities(lsp.protocol.make_client_capabilities())
+local capabilities = cmp_nvim_lsp.default_capabilities(lsp.protocol.make_client_capabilities())
 
 -- lsp buffer attach callback
 local function on_attach_handler(client, bufnr)
@@ -49,7 +50,7 @@ local function on_attach_handler(client, bufnr)
         end,
     })
     -- attach navic client (must occur after the autocommand)
-    navic.attach(client ,bufnr)
+    navic.attach(client, bufnr)
 end
 
 -- configure diagnostic symbols
@@ -73,13 +74,42 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
             -- spacing = 4,
         -- },
         virtual_text = false,
-        signs = true,
+        signs = {
+            priority = 10,
+        },
         severity_sort = true,
     }
 )
 
+-- Only show most severe sign from diagnostic to preserve space on the signcolumn
+local single_signs_ns = api.nvim_create_namespace('single_sign')
+local orig_signs_handler = vim.diagnostic.handlers.signs
+vim.diagnostic.handlers.signs = {
+    -- override the show function to only display the most severe
+    show = function(namespace, bufnr, diagnostics, opts)
+        -- get all buffer diagnostics
+        local buf_diagnostics = vim.diagnostic.get(bufnr)
+        local max_sev_at_line = {}
+        for _, def in pairs(buf_diagnostics) do
+            local m_sev = max_sev_at_line[def.lnum]
+            -- lower sev is more severe
+            if not m_sev or def.severity < m_sev.severity then
+                max_sev_at_line[def.lnum] = def
+            end
+        end
+        local filtered = vim.tbl_values(max_sev_at_line)
+        orig_signs_handler.show(single_signs_ns, bufnr, filtered, opts)
+    end,
+    hide = function(namespace, bufnr)
+        orig_signs_handler.hide(single_signs_ns, bufnr)
+    end
+}
+
+-- register progress message callback
+lsp_progress.register_lsp_progress()
+
 -- configure each lsp
-require("clangd_extensions").setup {
+clangd_extensions.setup {
     server = {
         capabilities = capabilities,
         on_attach = on_attach_handler,
@@ -114,6 +144,21 @@ require("clangd_extensions").setup {
             },
         },
     }
+}
+
+lspconfig.cmake.setup {
+    capabilities = capabilities,
+    on_attach = on_attach_handler,
+}
+
+lspconfig.jdtls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach_handler,
+}
+
+lspconfig.pylsp.setup {
+    capabilities = capabilities,
+    on_attach = on_attach_handler,
 }
 
 lspconfig.ocamllsp.setup {

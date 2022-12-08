@@ -100,10 +100,20 @@ function M.get_setopt_callback(options)
 end
 
 -- Map keys with noremap set by default
-function M.keymap(mode, lhs, rhs, opts)
-    local options = {
-        noremap = true
-    }
+function M.keymap(modedef, lhs, rhs, opts)
+    local options = { noremap = true }
+    local modes = {}
+    if type(modedef) == 'string' then
+        modes[1] = modedef
+    elseif type(modedef) == 'table' then
+        modes = modedef
+    else
+        vim.notify(string.format('Invalid mode definition %s keymap from %s to s.',
+                                 vim.inspect(modedef), lhs, rhs),
+                   vim.log.levels.ERROR)
+        return
+    end
+
     local target = rhs
     if opts then
         options = vim.tbl_extend("force", options, opts)
@@ -111,16 +121,17 @@ function M.keymap(mode, lhs, rhs, opts)
 
     -- handle function callback keymaps
     if type(rhs) == 'function' then
-        options.callback = rhs
-        target = ''
+        options.callback = rhs target = ''
     end
 
     --  handle buffer keymaps
-    if options.buffer ~= nil then
-        local bufno = M.table_pop_key(options, 'buffer')
-        api.nvim_buf_set_keymap(bufno, mode, lhs, target, options)
-    else
-        api.nvim_set_keymap(mode, lhs, target, options)
+    for _, mode in ipairs(modes) do
+        if options.buffer ~= nil then
+            local bufno = M.table_pop_key(options, 'buffer')
+            api.nvim_buf_set_keymap(bufno, mode, lhs, target, options)
+        else
+            api.nvim_set_keymap(mode, lhs, target, options)
+        end
     end
 end
 

@@ -1,3 +1,5 @@
 require('user.autocommands')
+require('user.filetype')
 require('user.highlight')
+require('user.keymap')
 require('user.options')

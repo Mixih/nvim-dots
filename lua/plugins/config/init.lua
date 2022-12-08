@@ -1,6 +1,7 @@
 local util = require('core.util')
 
 util.prequire('plugins.config.colorscheme')
+util.prequire('plugins.config.comment')
 util.prequire('plugins.config.common')
 util.prequire('plugins.config.feline')
 util.prequire('plugins.config.gitsigns')

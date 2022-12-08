@@ -34,7 +34,7 @@ opt.foldmethod = 'expr'
 
 -- fix control space mapping on certain broken terminals
 if vim.api.nvim_call_function('has', {'gui_running'}) then
-    util.keymap('i', '<C-Space>', '<C-n')
+    util.keymap('i', '<C-Space>', '<C-n>')
 else
-    util.keymap('i', '<C-Space', '')
+    util.keymap('i', '<C-Space>', '')
 end

@@ -195,10 +195,10 @@ statusline_components.active[2] = {
         provider = {
             name = 'position',
             opts = {
-                --padding = {
-                    --line = 2,
-                    --col = 2,
-                --},
+                -- padding = {
+                --     line = 2,
+                --     col = 2,
+                -- },
                 format = ' {line}:{col}',
             }
         },
@@ -235,6 +235,9 @@ statusline_components.active[2] = {
     {
         provider = 'diagnostic_info',
         hl = { fg = 'skyblue' },
+    },
+    {
+        provider = ' '
     },
 }
 

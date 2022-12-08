@@ -13,7 +13,9 @@ Personal config that leverages the lua-based configuration for flexibility.
 ## Usage
 
 1. Clone this repo somewhere safe
-2. Symbolic link ``~/.config/nvim`` to this repo. If porting from an existing config,
+
+2. Symbolic link `~/.config/nvim` to this repo. If porting from an existing config,
    `~/.local/share/nvim` should be cleared to prevent conflicts.
+
 3. Start neovim. The first load should automatically bootstrap the plugins. Neovim should
    be restarted once packer is done downloading and configuring the plugins.
