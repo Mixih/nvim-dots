@@ -1,0 +1,70 @@
+snippet entity "entity definition" b
+entity $1 is
+	$0
+end $1;
+endsnippet
+
+snippet port "port definition" b
+port(
+	$0
+);
+endsnippet
+
+snippet arch "architecture def" b
+architecture $1 is
+begin
+	$0
+end $1;
+endsnippet
+
+snippet component "component def" b
+component $1
+	$0
+end component;
+$0
+endsnippet
+
+snippet process "process def" b
+process($1)
+begin
+	$0
+end process;
+endsnippet
+
+snippet for "for loop" b
+for $1 in $2 loop
+	$0
+end for;
+endsnippet
+
+snippet if "if ..." b
+if $1 then
+	$0
+end if;
+endsnippet
+
+snippet gen "generate statement" b
+$1: for $2 in $3 generate
+	$0
+end generate;
+endsnippet
+
+snippet case "case statement" b
+case $1 is
+	$0
+end case;
+endsnippet
+
+snippet when "when statement" b
+endsnippet
+
+snippet module "file module" b
+entity $1 is
+end $1;
+
+architecture $2 of $1 is
+begin
+	$0
+end $2;
+endsnippet
+

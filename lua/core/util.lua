@@ -103,6 +103,13 @@ end
 function M.keymap(modedef, lhs, rhs, opts)
     local options = { noremap = true }
     local modes = {}
+    -- sanity checks
+    if rhs == nil then
+        vim.notify(string.format('LHS of %s keymap was nil',
+                                 lhs, rhs),
+                   vim.log.levels.ERROR)
+        return
+    end
     if type(modedef) == 'string' then
         modes[1] = modedef
     elseif type(modedef) == 'table' then
@@ -121,7 +128,8 @@ function M.keymap(modedef, lhs, rhs, opts)
 
     -- handle function callback keymaps
     if type(rhs) == 'function' then
-        options.callback = rhs target = ''
+        options.callback = rhs
+        target = ''
     end
 
     --  handle buffer keymaps

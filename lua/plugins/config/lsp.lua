@@ -13,8 +13,16 @@ local lsp = vim.lsp
 -- set capabilities for lsps
 local capabilities = cmp_nvim_lsp.default_capabilities(lsp.protocol.make_client_capabilities())
 
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
 -- lsp buffer attach callback
-local function on_attach_handler(client, bufnr)
+local function on_attach_handler(event)
+    local bufnr = event.buf
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
     local hover_open = false
     -- keybinds for lsp buffers
     local keyopts = { buffer = bufnr }
@@ -30,7 +38,7 @@ local function on_attach_handler(client, bufnr)
         lsp.buf.hover()
     end, keyopts)
     util.keymap('n', '<leader><space>a', lsp.buf.code_action, keyopts)
-    util.keymap('n', '<leader><space>f', lsp.buf.formatting, keyopts)
+    util.keymap('n', '<leader><space>f', lsp.buf.format, keyopts)
     util.keymap('n', '<leader><space>r', lsp.buf.rename, keyopts)
     util.keymap('n', '<leader><space>ds', lsp.buf.document_symbol, keyopts)
     util.keymap('n', '<leader><space>wa', lsp.buf.add_workspace_folder, keyopts)
@@ -43,6 +51,7 @@ local function on_attach_handler(client, bufnr)
     -- show diagnostic automatically as pop-up
     util.define_buffer_autocmd({
         events = { 'CursorHold' },
+        override = true,
         callback = function(event)
             if (not hover_open) then
                 vim.diagnostic.open_float({ focusable = false })
@@ -53,6 +62,14 @@ local function on_attach_handler(client, bufnr)
     navic.attach(client, bufnr)
 end
 
+-- register callback on LspSetup event
+util.define_autocmds('LspSetup', {
+    {
+        events = 'LspAttach',
+        callback = on_attach_handler,
+    }
+})
+
 -- configure diagnostic symbols
 local function lspSymbol(name, icon)
     vim.fn.sign_define(
@@ -61,15 +78,15 @@ local function lspSymbol(name, icon)
     )
 end
 
-lspSymbol('Error', '')
-lspSymbol('Hint', '')
+lspSymbol('Error', '')
+lspSymbol('Hint', '')
 lspSymbol('Info', '')
-lspSymbol('Warn', '')
+lspSymbol('Warn', '')
 
 -- set diagnostic format
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
     lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
+        underline = true;
         -- virtual_text =  {
             -- spacing = 4,
         -- },
@@ -148,27 +165,18 @@ clangd_extensions.setup {
 
 lspconfig.cmake.setup {
     capabilities = capabilities,
-    on_attach = on_attach_handler,
+}
+
+lspconfig.ghdl_ls.setup {
+    capabilities = capabilities,
 }
 
 lspconfig.jdtls.setup {
     capabilities = capabilities,
-    on_attach = on_attach_handler,
 }
 
-lspconfig.pylsp.setup {
+lspconfig.lua_ls.setup {
     capabilities = capabilities,
-    on_attach = on_attach_handler,
-}
-
-lspconfig.ocamllsp.setup {
-    capabilities = capabilities,
-    on_attach = on_attach_handler,
-}
-
-lspconfig.sumneko_lua.setup {
-    capabilities = capabilities,
-    on_attach = on_attach_handler,
     settings = {
         Lua = {
             runtime = {
@@ -191,7 +199,28 @@ lspconfig.sumneko_lua.setup {
   },
 }
 
+lspconfig.pylsp.setup {
+    capabilities = capabilities,
+}
+
+lspconfig.ocamllsp.setup {
+    capabilities = capabilities,
+}
+
+lspconfig.svlangserver.setup {
+    capabilities = capabilities,
+    settings = {
+        systemverilog = {
+            includeIndexing = { "*.{v,vh,sv,svh}", "**/*.{v,vh,sv,svh}" }
+        }
+    },
+}
+
 lspconfig.texlab.setup {
     capabilities = capabilities,
-    on_attach = on_attach_handler,
 }
+
+-- lspconfig.vhdl_ls.setup {
+--     capabilities = capabilities,
+-- }
+

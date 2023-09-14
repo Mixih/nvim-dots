@@ -1,4 +1,5 @@
 local comment = require('Comment')
+local ft = require('Comment.ft')
 
 comment.setup({
     ---Add a space b/w comment and the line
@@ -45,3 +46,5 @@ comment.setup({
     ---Function to call after (un)comment
     post_hook = nil,
 })
+
+ft.set('vhdl', '--%s')

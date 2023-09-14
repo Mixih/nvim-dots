@@ -40,3 +40,7 @@ vim.g.Hexokinase_optInPatterns = {
     'hsl',
     'hsla',
 }
+
+-- easy align plugin
+util.keymap('n', 'ga', '<Plug>(EasyAlign)')
+util.keymap('x', 'ga', '<Plug>(EasyAlign)')
