@@ -127,39 +127,39 @@ lsp_progress.register_lsp_progress()
 
 -- configure each lsp
 clangd_extensions.setup {
-    server = {
-        capabilities = capabilities,
-        on_attach = on_attach_handler,
-        cmd = {
-            'clangd',
-            '--background-index',
-            '--clang-tidy',
-            '--header-insertion=iwyu'
-        }
+     inlay_hints = {
+        inline = true,
     },
-    extensions = {
-        autoSetHints = true,
-        ast = {
-            -- These require codicons (https://github.com/microsoft/vscode-codicons)
-            role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
-            },
-
-            kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
-            },
+    ast = {
+        -- These require codicons (https://github.com/microsoft/vscode-codicons)
+        role_icons = {
+            type = "",
+            declaration = "",
+            expression = "",
+            specifier = "",
+            statement = "",
+            ["template argument"] = "",
         },
+
+        kind_icons = {
+            Compound = "",
+            Recovery = "",
+            TranslationUnit = "",
+            PackExpansion = "",
+            TemplateTypeParm = "",
+            TemplateTemplateParm = "",
+            TemplateParamObject = "",
+        },
+    },
+}
+
+lspconfig.clangd.setup {
+    capabilities = capabilities,
+    cmd = {
+        'clangd',
+        '--background-index',
+        '--clang-tidy',
+        '--header-insertion=iwyu'
     }
 }
 

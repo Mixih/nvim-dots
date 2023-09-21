@@ -79,8 +79,14 @@ util.define_autocmds('StripTrailingSpaces', {
     {
         events = { 'FileType' },
         pattern = { 'asm', 'c', 'cpp', 'gas', 'lua', 'java', 'kotlin',
-                    'ocmal', 'python', 'tex', 'vim'},
-        callback = strip_trailing_spaces_callback,
+                    'ocaml', 'python', 'systemverilog', 'tex', 'verilog',
+                    'vhdl', 'vim'},
+        callback = function (event)
+            util.define_buffer_autocmd({
+                events = { 'BufWritePre' },
+                command = '%s/\\s\\+$//e',
+            })
+        end
     }
 })
 
